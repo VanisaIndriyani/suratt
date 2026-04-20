@@ -15,6 +15,33 @@ use Throwable;
 
 class DisposisiController extends Controller
 {
+    private const DISPOSISI_KASKOGARTAP_OPTIONS = [
+        'ACC',
+        'ACARAKAN',
+        'BALAS',
+        'BANTU',
+        'DUKUNG',
+        'IKUTI PERKEMBANGAN',
+        'HADIR',
+        'TIDAK HADIR',
+        'KOORDINASIKAN',
+        'LAPORKAN',
+        'PELAJARI & TELITI',
+        'PEDOMANI',
+        'SEBAGAI BAHAN',
+        'SIAPKAN',
+        'TINDAK LANJUTI',
+        'TANGGAPAN & SARAN',
+        'TERUSKAN KE SATWAH',
+        'WAKILI',
+        'ARSIP',
+        'CATAT',
+        'INGATKAN',
+        'MONITOR',
+        'UDL',
+        'UDK',
+    ];
+
     private function generatePdfAndMerge(Disposisi $disposisi, SuratMasuk $suratMasuk): array
     {
         $pdfDisposisiPath = null;
@@ -186,6 +213,7 @@ class DisposisiController extends Controller
         return view('disposisi.create', [
             'surat' => $suratMasuk,
             'users' => $users,
+            'disposisiKaskogartapOptions' => self::DISPOSISI_KASKOGARTAP_OPTIONS,
         ]);
     }
 
@@ -196,6 +224,7 @@ class DisposisiController extends Controller
 
         $validated = $request->validate([
             'ke_user_id' => ['required', 'integer', 'exists:users,id'],
+            'disposisi_kaskogartap' => ['required', 'string', 'max:255', 'in:'.implode(',', self::DISPOSISI_KASKOGARTAP_OPTIONS)],
             'instruksi' => ['required', 'string'],
         ]);
 
@@ -207,6 +236,7 @@ class DisposisiController extends Controller
             'surat_masuk_id' => $suratMasuk->id,
             'dari_user_id' => $request->user()->id,
             'ke_user_id' => $penerima->id,
+            'disposisi_kaskogartap' => $validated['disposisi_kaskogartap'],
             'instruksi' => $validated['instruksi'],
             'tanggal_disposisi' => now()->toDateString(),
             'status' => 'selesai',

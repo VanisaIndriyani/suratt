@@ -51,8 +51,8 @@
                 </div>
 
                 <div>
-                    <label class="form-label">Ganti File Surat</label>
-                    <input type="file" name="file_surat" class="form-control">
+                    <label class="form-label">Ganti File Surat (PDF, maks 10 MB)</label>
+                    <input type="file" name="file_surat" class="form-control" accept="application/pdf,.pdf">
                     @if($item->file_surat)
                         <div class="small mt-2">
                             <a class="link-primary text-decoration-none" href="{{ route('surat-masuk.download', $item) }}">Download file saat ini</a>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Login - {{ config('app.name') }}</title>
+        <title>Login - Sistem Informasi Pengarsipan Surat Kogartap I/Jakarta</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
         <style>
@@ -74,7 +74,7 @@
                                     <div class="d-inline-flex align-items-center justify-content-center rounded-4 shadow-sm p-2 mb-2 brand-badge">
                                         <img src="{{ asset('img/logo (2).png') }}" alt="Logo" width="60" height="60" class="img-fluid">
                                     </div>
-                                    <h1 class="h4 mb-1 fw-semibold">Sistem Persuratan</h1>
+                                    <h1 class="h5 mb-1 fw-semibold">Sistem Informasi Pengarsipan Surat Kogartap I/Jakarta</h1>
                                     <div class="text-muted small">Masuk menggunakan akun kamu</div>
                                 </div>
 

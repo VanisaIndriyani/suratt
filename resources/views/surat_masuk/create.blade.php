@@ -50,8 +50,8 @@
                 </div>
 
                 <div>
-                    <label class="form-label">File Surat (PDF/DOC)</label>
-                    <input type="file" name="file_surat" class="form-control">
+                    <label class="form-label">File Surat (PDF, maks 10 MB)</label>
+                    <input type="file" name="file_surat" class="form-control" accept="application/pdf,.pdf">
                     @error('file_surat') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                 </div>
 

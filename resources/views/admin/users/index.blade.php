@@ -4,7 +4,7 @@
     <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-2 mb-3">
         <div>
             <div class="h4 mb-0">Users</div>
-            <div class="text-muted">Kelola akun pengguna dan role.</div>
+            <div class="text-muted">Kelola akun pengguna dan jabatan.</div>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Tambah User</a>
@@ -15,7 +15,7 @@
         <div class="card-body">
             <form method="get" class="row g-2 align-items-center">
                 <div class="col-12 col-lg-8">
-                    <input name="q" value="{{ $q }}" placeholder="Cari nama/username/email/no hp/role..." class="form-control">
+                    <input name="q" value="{{ $q }}" placeholder="Cari nama/username/email/no hp/jabatan..." class="form-control">
                 </div>
                 <div class="col-12 col-lg-4 d-flex gap-2">
                     <button class="btn btn-primary" type="submit">Cari</button>
@@ -34,7 +34,7 @@
                         <th>Username</th>
                         <th>Email</th>
                         <th>No HP</th>
-                        <th>Role</th>
+                        <th>Jabatan</th>
                         <th class="text-end">Aksi</th>
                     </tr>
                 </thead>
@@ -54,7 +54,7 @@
                             <td>{{ $item->username }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->no_hp ?: '-' }}</td>
-                            <td><span class="badge {{ $badge }}">{{ $item->role }}</span></td>
+                            <td><span class="badge {{ $badge }}">{{ $item->jabatan ?: $item->role }}</span></td>
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
                                     <a href="{{ route('admin.users.edit', $item) }}" class="btn btn-sm btn-outline-primary" title="Ubah" aria-label="Ubah">

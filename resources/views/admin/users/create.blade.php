@@ -36,13 +36,14 @@
                         @error('no_hp') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Role</label>
-                        <select name="role" class="form-select" required>
-                            @foreach(['staf','asmin','asops','kasatker','kaskogartap'] as $r)
-                                <option value="{{ $r }}" @selected(old('role','staf') === $r)>{{ $r }}</option>
+                        <label class="form-label">Jabatan</label>
+                        @php($defaultJabatan = $jabatanOptions[0] ?? 'ASMIN')
+                        <select name="jabatan" class="form-select" required>
+                            @foreach($jabatanOptions as $j)
+                                <option value="{{ $j }}" @selected(old('jabatan', $defaultJabatan) === $j)>{{ $j }}</option>
                             @endforeach
                         </select>
-                        @error('role') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        @error('jabatan') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Password</label>

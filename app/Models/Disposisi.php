@@ -16,6 +16,7 @@ class Disposisi extends Model
         'surat_masuk_id',
         'dari_user_id',
         'ke_user_id',
+        'disposisi_kaskogartap',
         'instruksi',
         'tanggal_disposisi',
         'status',

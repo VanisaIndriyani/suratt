@@ -56,7 +56,10 @@ class SuratKeluarController extends Controller
             'tujuan' => ['required', 'string', 'max:255'],
             'jenis_surat' => ['nullable', 'string', 'max:255'],
             'perihal' => ['required', 'string', 'max:255'],
-            'file_surat' => ['nullable', 'file', 'max:10240'],
+            'file_surat' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+        ], [
+            'file_surat.mimes' => 'File surat harus berformat PDF.',
+            'file_surat.max' => 'Ukuran file surat maksimal 10 MB.',
         ]);
 
         $path = null;
@@ -106,7 +109,10 @@ class SuratKeluarController extends Controller
             'tujuan' => ['required', 'string', 'max:255'],
             'jenis_surat' => ['nullable', 'string', 'max:255'],
             'perihal' => ['required', 'string', 'max:255'],
-            'file_surat' => ['nullable', 'file', 'max:10240'],
+            'file_surat' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+        ], [
+            'file_surat.mimes' => 'File surat harus berformat PDF.',
+            'file_surat.max' => 'Ukuran file surat maksimal 10 MB.',
         ]);
 
         if ($request->hasFile('file_surat')) {

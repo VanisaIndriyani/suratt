@@ -57,6 +57,7 @@
         @php($surat = $item->suratMasuk)
         @php($toRole = strtolower(trim((string) ($item->keUser?->role ?? ''))))
         @php($instruksiLower = strtolower(trim((string) $item->instruksi)))
+        @php($selectedDisposisi = strtoupper(trim((string) ($item->disposisi_kaskogartap ?? ''))))
 
         <div class="page">
             <div class="top-actions">
@@ -154,39 +155,45 @@
                 </div>
 
                 <div class="section-title">DISPOSISI KASKOGARTAP I/JAKARTA</div>
-                @php($mark = function (string $key) use ($instruksiLower) { return str_contains($instruksiLower, $key); })
+                @php($mark = function (string $label, string $fallbackKey) use ($selectedDisposisi, $instruksiLower) {
+                    if ($selectedDisposisi !== '') {
+                        return $selectedDisposisi === $label;
+                    }
+
+                    return str_contains($instruksiLower, $fallbackKey);
+                })
                 <div class="actiongrid">
                     <div class="actioncol">
-                        <div class="chk"><div class="boxchk">{{ $mark('acc') ? '✓' : '' }}</div><div>ACC</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('acarakan') ? '✓' : '' }}</div><div>ACARAKAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('balas') ? '✓' : '' }}</div><div>BALAS</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('bantu') ? '✓' : '' }}</div><div>BANTU</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('dukung') ? '✓' : '' }}</div><div>DUKUNG</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('ikuti') ? '✓' : '' }}</div><div>IKUTI PERKEMBANGAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('ACC', 'acc') ? '✓' : '' }}</div><div>ACC</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('ACARAKAN', 'acarakan') ? '✓' : '' }}</div><div>ACARAKAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('BALAS', 'balas') ? '✓' : '' }}</div><div>BALAS</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('BANTU', 'bantu') ? '✓' : '' }}</div><div>BANTU</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('DUKUNG', 'dukung') ? '✓' : '' }}</div><div>DUKUNG</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('IKUTI PERKEMBANGAN', 'ikuti') ? '✓' : '' }}</div><div>IKUTI PERKEMBANGAN</div></div>
                     </div>
                     <div class="actioncol">
-                        <div class="chk"><div class="boxchk">{{ $mark('hadir') ? '✓' : '' }}</div><div>HADIR</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('tidak hadir') ? '✓' : '' }}</div><div>TIDAK HADIR</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('koordin') ? '✓' : '' }}</div><div>KOORDINASIKAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('lapor') ? '✓' : '' }}</div><div>LAPORKAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('pelajari') || $mark('teliti') ? '✓' : '' }}</div><div>PELAJARI &amp; TELITI</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('pedoman') ? '✓' : '' }}</div><div>PEDOMANI</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('HADIR', 'hadir') ? '✓' : '' }}</div><div>HADIR</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('TIDAK HADIR', 'tidak hadir') ? '✓' : '' }}</div><div>TIDAK HADIR</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('KOORDINASIKAN', 'koordin') ? '✓' : '' }}</div><div>KOORDINASIKAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('LAPORKAN', 'lapor') ? '✓' : '' }}</div><div>LAPORKAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('PELAJARI & TELITI', 'pelajari') || $mark('PELAJARI & TELITI', 'teliti') ? '✓' : '' }}</div><div>PELAJARI &amp; TELITI</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('PEDOMANI', 'pedoman') ? '✓' : '' }}</div><div>PEDOMANI</div></div>
                     </div>
                     <div class="actioncol">
-                        <div class="chk"><div class="boxchk">{{ $mark('bahan') ? '✓' : '' }}</div><div>SEBAGAI BAHAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('simpan') ? '✓' : '' }}</div><div>SIMPAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('tindak lanjut') || $mark('tindaklanjut') ? '✓' : '' }}</div><div>TINDAK LANJUTI</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('saran') || $mark('tanggapan') ? '✓' : '' }}</div><div>TANGGAPAN &amp; SARAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('teruskan') ? '✓' : '' }}</div><div>TERUSKAN KE STAFWAH</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('wakili') ? '✓' : '' }}</div><div>WAKILI</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('SEBAGAI BAHAN', 'bahan') ? '✓' : '' }}</div><div>SEBAGAI BAHAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('SIAPKAN', 'siapkan') || $mark('SIAPKAN', 'simpan') ? '✓' : '' }}</div><div>SIAPKAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('TINDAK LANJUTI', 'tindak lanjut') || $mark('TINDAK LANJUTI', 'tindaklanjut') ? '✓' : '' }}</div><div>TINDAK LANJUTI</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('TANGGAPAN & SARAN', 'saran') || $mark('TANGGAPAN & SARAN', 'tanggapan') ? '✓' : '' }}</div><div>TANGGAPAN &amp; SARAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('TERUSKAN KE SATWAH', 'teruskan') ? '✓' : '' }}</div><div>TERUSKAN KE SATWAH</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('WAKILI', 'wakili') ? '✓' : '' }}</div><div>WAKILI</div></div>
                     </div>
                     <div class="actioncol">
-                        <div class="chk"><div class="boxchk">{{ $mark('arsip') ? '✓' : '' }}</div><div>ARSIP</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('catat') ? '✓' : '' }}</div><div>CATAT</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('ingat') ? '✓' : '' }}</div><div>INGATKAN</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('monitor') ? '✓' : '' }}</div><div>MONITOR</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('udl') ? '✓' : '' }}</div><div>UDL</div></div>
-                        <div class="chk"><div class="boxchk">{{ $mark('udk') ? '✓' : '' }}</div><div>UDK</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('ARSIP', 'arsip') ? '✓' : '' }}</div><div>ARSIP</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('CATAT', 'catat') ? '✓' : '' }}</div><div>CATAT</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('INGATKAN', 'ingat') ? '✓' : '' }}</div><div>INGATKAN</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('MONITOR', 'monitor') ? '✓' : '' }}</div><div>MONITOR</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('UDL', 'udl') ? '✓' : '' }}</div><div>UDL</div></div>
+                        <div class="chk"><div class="boxchk">{{ $mark('UDK', 'udk') ? '✓' : '' }}</div><div>UDK</div></div>
                     </div>
                 </div>
 

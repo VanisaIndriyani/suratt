@@ -51,6 +51,7 @@
         @php($surat = $item->suratMasuk)
         @php($toRole = strtolower(trim((string) ($item->keUser?->role ?? ''))))
         @php($instruksiLower = strtolower(trim((string) $item->instruksi)))
+        @php($selectedDisposisi = strtoupper(trim((string) ($item->disposisi_kaskogartap ?? ''))))
         @php($tickSvg = 'data:image/svg+xml;base64,'.base64_encode('<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M10.2 3.1 5 9 1.8 6.1" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'))
 
         <div class="page">
@@ -160,48 +161,54 @@
                 </div>
 
                 <div class="section-title">DISPOSISI KASKOGARTAP I/JAKARTA</div>
-                @php($mark = function (string $key) use ($instruksiLower) { return str_contains($instruksiLower, $key); })
+                @php($mark = function (string $label, string $fallbackKey) use ($selectedDisposisi, $instruksiLower) {
+                    if ($selectedDisposisi !== '') {
+                        return $selectedDisposisi === $label;
+                    }
+
+                    return str_contains($instruksiLower, $fallbackKey);
+                })
                 <div class="pad">
                     <table class="cols">
                         <tr>
                             <td style="width: 25%; padding-right: 8px;">
                                 <table class="list">
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('acc'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">ACC</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('acarakan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">ACARAKAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('balas'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">BALAS</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('bantu'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">BANTU</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('dukung'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">DUKUNG</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('ikuti'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">IKUTI PERKEMBANGAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('ACC', 'acc'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">ACC</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('ACARAKAN', 'acarakan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">ACARAKAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('BALAS', 'balas'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">BALAS</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('BANTU', 'bantu'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">BANTU</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('DUKUNG', 'dukung'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">DUKUNG</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('IKUTI PERKEMBANGAN', 'ikuti'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">IKUTI PERKEMBANGAN</td></tr>
                                 </table>
                             </td>
                             <td style="width: 25%; padding: 0 4px;">
                                 <table class="list">
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('hadir'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">HADIR</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('tidak hadir'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TIDAK HADIR</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('koordin'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">KOORDINASIKAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('lapor'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">LAPORKAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('pelajari') || $mark('teliti'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">PELAJARI &amp; TELITI</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('pedoman'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">PEDOMANI</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('HADIR', 'hadir'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">HADIR</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('TIDAK HADIR', 'tidak hadir'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TIDAK HADIR</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('KOORDINASIKAN', 'koordin'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">KOORDINASIKAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('LAPORKAN', 'lapor'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">LAPORKAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('PELAJARI & TELITI', 'pelajari') || $mark('PELAJARI & TELITI', 'teliti'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">PELAJARI &amp; TELITI</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('PEDOMANI', 'pedoman'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">PEDOMANI</td></tr>
                                 </table>
                             </td>
                             <td style="width: 25%; padding: 0 4px;">
                                 <table class="list">
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('bahan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">SEBAGAI BAHAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('simpan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">SIMPAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('tindak lanjut') || $mark('tindaklanjut'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TINDAK LANJUTI</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('saran') || $mark('tanggapan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TANGGAPAN &amp; SARAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('teruskan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TERUSKAN KE STAFWAH</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('wakili'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">WAKILI</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('SEBAGAI BAHAN', 'bahan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">SEBAGAI BAHAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('SIAPKAN', 'siapkan') || $mark('SIAPKAN', 'simpan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">SIAPKAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('TINDAK LANJUTI', 'tindak lanjut') || $mark('TINDAK LANJUTI', 'tindaklanjut'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TINDAK LANJUTI</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('TANGGAPAN & SARAN', 'saran') || $mark('TANGGAPAN & SARAN', 'tanggapan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TANGGAPAN &amp; SARAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('TERUSKAN KE SATWAH', 'teruskan'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">TERUSKAN KE SATWAH</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('WAKILI', 'wakili'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">WAKILI</td></tr>
                                 </table>
                             </td>
                             <td style="width: 25%; padding-left: 8px;">
                                 <table class="list">
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('arsip'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">ARSIP</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('catat'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">CATAT</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('ingat'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">INGATKAN</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('monitor'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">MONITOR</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('udl'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">UDL</td></tr>
-                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('udk'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">UDK</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('ARSIP', 'arsip'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">ARSIP</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('CATAT', 'catat'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">CATAT</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('INGATKAN', 'ingat'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">INGATKAN</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('MONITOR', 'monitor'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">MONITOR</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('UDL', 'udl'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">UDL</td></tr>
+                                    <tr><td class="boxcell"><span class="boxchk">@if($mark('UDK', 'udk'))<img src="{{ $tickSvg }}" alt="V">@endif</span></td><td class="label">UDK</td></tr>
                                 </table>
                             </td>
                         </tr>

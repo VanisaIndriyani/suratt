@@ -37,18 +37,13 @@
                         @error('no_hp') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="col-12 col-md-6">
-                        <label class="form-label">Role</label>
-                        @if($item->role === 'admin')
-                            <input type="hidden" name="role" value="admin">
-                            <input class="form-control" value="admin" readonly>
-                        @else
-                            <select name="role" class="form-select" required>
-                                @foreach(['staf','asmin','asops','kasatker','kaskogartap'] as $r)
-                                    <option value="{{ $r }}" @selected(old('role', $item->role) === $r)>{{ $r }}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                        @error('role') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                        <label class="form-label">Jabatan</label>
+                        <select name="jabatan" class="form-select" required>
+                            @foreach($jabatanOptions as $j)
+                                <option value="{{ $j }}" @selected(old('jabatan', $item->jabatan ?: strtoupper($item->role)) === $j)>{{ $j }}</option>
+                            @endforeach
+                        </select>
+                        @error('jabatan') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label">Password Baru (opsional)</label>

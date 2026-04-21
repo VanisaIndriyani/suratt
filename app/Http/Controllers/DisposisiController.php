@@ -103,6 +103,10 @@ class DisposisiController extends Controller
             return true;
         }
 
+        if ($role === 'kaskogartap') {
+            return true;
+        }
+
         return $disposisi->dari_user_id === $user->id || $disposisi->ke_user_id === $user->id;
     }
 

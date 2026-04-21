@@ -237,7 +237,7 @@ class DisposisiController extends Controller
         $validated = $request->validate([
             'ke_user_id' => ['required', 'integer', 'exists:users,id'],
             'disposisi_kaskogartap' => ['required', 'string', 'max:255', 'in:'.implode(',', self::DISPOSISI_KASKOGARTAP_OPTIONS)],
-            'instruksi' => ['required', 'string'],
+            'instruksi' => ['nullable', 'string'],
         ]);
 
         $penerima = User::query()
@@ -249,7 +249,7 @@ class DisposisiController extends Controller
             'dari_user_id' => $request->user()->id,
             'ke_user_id' => $penerima->id,
             'disposisi_kaskogartap' => $validated['disposisi_kaskogartap'],
-            'instruksi' => $validated['instruksi'],
+            'instruksi' => $validated['instruksi'] ?? '',
             'tanggal_disposisi' => now()->toDateString(),
             'status' => 'selesai',
         ]);

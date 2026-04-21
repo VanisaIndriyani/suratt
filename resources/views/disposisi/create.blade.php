@@ -102,7 +102,7 @@
 
                         <div>
                             <label class="form-label">Instruksi</label>
-                            <textarea name="instruksi" rows="5" class="form-control" required placeholder="Tulis instruksi disposisi...">{{ old('instruksi') }}</textarea>
+                            <textarea name="instruksi" rows="5" class="form-control" placeholder="Tulis instruksi disposisi...">{{ old('instruksi') }}</textarea>
                             @error('instruksi') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
 

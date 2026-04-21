@@ -58,10 +58,6 @@
                         <i class="bi bi-inbox"></i>
                         <span>Surat Masuk</span>
                     </a>
-                    <a class="nav-link sidebar-link d-flex align-items-center gap-2 {{ request()->routeIs('surat-keluar.*') ? 'active' : '' }}" href="{{ route('surat-keluar.index') }}">
-                        <i class="bi bi-send"></i>
-                        <span>Surat Keluar</span>
-                    </a>
                     <a class="nav-link sidebar-link d-flex align-items-center gap-2 {{ request()->routeIs('disposisi.*') ? 'active' : '' }}" href="{{ route('disposisi.inbox') }}">
                         <i class="bi bi-arrow-left-right"></i>
                         <span>Disposisi Masuk</span>
@@ -94,10 +90,6 @@
                 <a class="nav-link sidebar-link d-flex align-items-center gap-2 {{ request()->routeIs('surat-masuk.*') ? 'active' : '' }}" href="{{ route('surat-masuk.index') }}">
                     <i class="bi bi-inbox"></i>
                     <span>Surat Masuk</span>
-                </a>
-                <a class="nav-link sidebar-link d-flex align-items-center gap-2 {{ request()->routeIs('surat-keluar.*') ? 'active' : '' }}" href="{{ route('surat-keluar.index') }}">
-                    <i class="bi bi-send"></i>
-                    <span>Surat Keluar</span>
                 </a>
                 <a class="nav-link sidebar-link d-flex align-items-center gap-2 {{ request()->routeIs('disposisi.*') ? 'active' : '' }}" href="{{ route('disposisi.inbox') }}">
                     <i class="bi bi-arrow-left-right"></i>

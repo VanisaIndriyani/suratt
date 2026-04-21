@@ -49,7 +49,7 @@
                     </button>
                 </form>
             @endif
-            @if($role === 'kaskogartap')
+            @if($role === 'kaskogartap' && $item->disposisis->isEmpty())
                 <a href="{{ route('surat-masuk.disposisi.create', $item) }}" class="btn btn-primary">
                     <i class="bi bi-send-check me-1"></i>
                     Buat Disposisi
@@ -153,12 +153,6 @@
                             <div class="fw-semibold">Disposisi</div>
                             <div class="text-muted small">Riwayat disposisi untuk surat ini ({{ $item->disposisis->count() }}).</div>
                         </div>
-                        @if($role === 'kaskogartap')
-                            <a href="{{ route('surat-masuk.disposisi.create', $item) }}" class="btn btn-outline-primary">
-                                <i class="bi bi-plus-circle me-1"></i>
-                                Tambah Disposisi
-                            </a>
-                        @endif
                     </div>
 
                     <div class="table-responsive mt-3">

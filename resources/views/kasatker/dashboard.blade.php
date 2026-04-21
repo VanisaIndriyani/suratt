@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-2 mb-3">
         <div>
-            <div class="h4 mb-0">Dashboard Kasatker</div>
+            <div class="h4 mb-0">Dashboard</div>
             <div class="text-muted">Melihat surat masuk sesuai disposisi dan menerima disposisi.</div>
         </div>
         <div class="d-flex flex-wrap gap-2">

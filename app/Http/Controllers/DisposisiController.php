@@ -205,6 +205,12 @@ class DisposisiController extends Controller
         $allowedRoles = $this->allowedRecipientRoles(auth()->user()->role);
         abort_if($allowedRoles === [], 403);
 
+        if ($suratMasuk->disposisis()->exists()) {
+            return redirect()
+                ->route('surat-masuk.show', $suratMasuk)
+                ->with('error', 'Surat ini sudah memiliki disposisi dan tidak dapat didisposisi ulang.');
+        }
+
         $users = User::query()
             ->whereIn('role', $allowedRoles)
             ->orderBy('name')
@@ -221,6 +227,12 @@ class DisposisiController extends Controller
     {
         $allowedRoles = $this->allowedRecipientRoles($request->user()->role);
         abort_if($allowedRoles === [], 403);
+
+        if ($suratMasuk->disposisis()->exists()) {
+            return redirect()
+                ->route('surat-masuk.show', $suratMasuk)
+                ->with('error', 'Surat ini sudah memiliki disposisi dan tidak dapat didisposisi ulang.');
+        }
 
         $validated = $request->validate([
             'ke_user_id' => ['required', 'integer', 'exists:users,id'],

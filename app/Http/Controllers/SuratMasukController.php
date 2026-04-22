@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SuratMasuk;
 use App\Models\User;
+use App\Services\WhatsappService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -70,7 +71,7 @@ class SuratMasukController extends Controller
         return view('surat_masuk.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, WhatsappService $whatsappService)
     {
         $validated = $request->validate([
             'nomor_surat' => ['required', 'string', 'max:255', 'unique:surat_masuk,nomor_surat'],
@@ -104,6 +105,28 @@ class SuratMasukController extends Controller
             'barcode' => $barcode,
             'status' => 'diproses',
         ]);
+
+        if (strtolower(trim((string) $request->user()->role)) === 'staf') {
+            $linkSurat = route('surat-masuk.show', $surat);
+            $linkUnduh = $path ? route('surat-masuk.download', $surat) : null;
+
+            $creator = $request->user();
+            $message = "Surat masuk baru dibuat oleh {$creator->name}\nNomor: {$surat->nomor_surat}\nPerihal: {$surat->perihal}\nPengirim: {$surat->pengirim}\nLink surat: {$linkSurat}";
+            if ($linkUnduh) {
+                $message .= "\nLink file: {$linkUnduh}";
+            }
+
+            $kaskogartapUsers = User::query()
+                ->whereRaw('LOWER(role) = ?', ['kaskogartap'])
+                ->orderBy('name')
+                ->get(['id', 'name', 'no_hp']);
+
+            foreach ($kaskogartapUsers as $kaskogartap) {
+                if ($kaskogartap->no_hp) {
+                    $whatsappService->send($kaskogartap->no_hp, $message);
+                }
+            }
+        }
 
         return redirect()
             ->route('surat-masuk.show', $surat)
